@@ -1,7 +1,7 @@
 require 'socket'
 
 puts "Starting the Server..................."
-server = TCPServer.open(3000) # Server would listen on port 2000
+server = TCPServer.open(3000) # Server would listen on port 3000
 loop{                         # Servers run forever
 	client_connection = server.accept # Establish client connect connection
 	client_connection.puts(Time.now) # Send the time to the client

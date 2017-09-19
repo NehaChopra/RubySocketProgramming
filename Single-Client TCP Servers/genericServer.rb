@@ -22,7 +22,7 @@ sleep 10
 server_socket.close
 
 
-# telnet localhost 2200
+# telnet localhost 8080
 # Connected to localhost.
 #                Escape character is '^]'.
 # 	                                 hello

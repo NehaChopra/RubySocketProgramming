@@ -5,11 +5,9 @@ class Server
 		@server_socket = TCPServer.open(socket_port, socket_address)
 
 		@connections_details = Hash.new
-		@connected_rooms = Hash.new
 		@connected_clients = Hash.new
 
 		@connections_details[:server] = @server_socket
-		@connections_details[:rooms] = @connected_rooms
 		@connections_details[:clients] = @connected_clients
 
 		puts 'Started server.........'
@@ -20,9 +18,9 @@ class Server
 	def run
 		loop{
 			client_connection = @server_socket.accept
-			Thread.start(client_connection) do |conn|
+			Thread.start(client_connection) do |conn| # open thread for each accepted connection
 				conn_name = conn.gets.chomp.to_sym
-				if(@connections_details[:clients][conn_name] != nil)
+				if(@connections_details[:clients][conn_name] != nil) # avoid connection if user exits
 					conn.puts "This username already exist"
 					conn.puts "quit"
 					conn.kill self
@@ -32,7 +30,7 @@ class Server
 				@connections_details[:clients][conn_name] = conn
 				conn.puts "Connection established successfully #{conn_name} => #{conn}, you may continue with chatting....."
 
-				establish_chatting(conn_name, conn)
+				establish_chatting(conn_name, conn) # allow chatting
 			end
 		}.join
 	end
